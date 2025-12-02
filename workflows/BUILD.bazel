@@ -1,0 +1,33 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library", "go_test")
+
+go_library(
+    name = "workflows",
+    srcs = [
+        "activities.go",
+        "order_workflow.go",
+        "payment_workflow.go",
+        "security_scan_workflow.go",
+        "worker.go",
+    ],
+    importpath = "github.com/example/monorepo/workflows",
+    visibility = ["//visibility:public"],
+    deps = [
+        "@io_temporal_sdk//:sdk",
+        "@io_temporal_sdk//activity",
+        "@io_temporal_sdk//client",
+        "@io_temporal_sdk//workflow",
+    ],
+)
+
+go_test(
+    name = "workflows_test",
+    srcs = [
+        "order_workflow_test.go",
+        "payment_workflow_test.go",
+        "security_scan_workflow_test.go",
+    ],
+    embed = [":workflows"],
+    deps = [
+        "@io_temporal_sdk//testsuite",
+    ],
+)

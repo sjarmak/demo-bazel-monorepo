@@ -1,0 +1,20 @@
+load("@npm//:defs.bzl", "npm_link_all_packages")
+load("@aspect_rules_ts//ts:defs.bzl", "ts_project")
+
+npm_link_all_packages(name = "node_modules")
+
+ts_project(
+    name = "agents",
+    srcs = [
+        "index.ts",
+        "orchestrator.ts",
+        "registry.ts",
+        "context.ts",
+        "middleware.ts",
+    ],
+    declaration = True,
+    visibility = ["//visibility:public"],
+    deps = [
+        ":node_modules",
+    ],
+)
